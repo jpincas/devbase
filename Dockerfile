@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM golang:1.20
+FROM golang:1.20.4-bullseye
 
 # First install all necessary tools
 RUN apt update
@@ -11,7 +11,7 @@ RUN wget https://deb.nodesource.com/setup_19.x
 RUN chmod +x setup_19.x
 RUN ./setup_19.x
 RUN apt-get install -y nodejs
-#
+
 # Elm
 RUN wget -O elm.gz https://github.com/elm/compiler/releases/download/0.19.1/binary-for-linux-64-bit.gz
 RUN gunzip elm.gz
@@ -23,10 +23,6 @@ RUN wget https://github.com/sass/dart-sass/releases/download/1.58.3/dart-sass-1.
 RUN tar -xvzf dart-sass-1.58.3-linux-x64.tar.gz 
 RUN mv dart-sass/sass /usr/local/bin/
 RUN mv dart-sass/src/ /usr/local/bin/
-
-# WKHMTLTOPDF
-RUN wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.bullseye_amd64.deb
-RUN apt install ./wkhtmltox_0.12.6.1-2.bullseye_amd64.deb -y
 
 # json2goconst
 RUN go install github.com/jpincas/json2goconst@latest 
@@ -45,3 +41,7 @@ RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTO
 RUN go install -v golang.org/x/tools/gopls@latest
 RUN go install -v github.com/go-delve/delve/cmd/dlv@latest
 RUN go install -v honnef.co/go/tools/cmd/staticcheck@latest
+
+# WKHMTLTOPDF
+RUN wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.bullseye_arm64.deb
+RUN apt install ./wkhtmltox_0.12.6.1-2.bullseye_amd64.deb -y
